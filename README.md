@@ -1,3 +1,5 @@
+Modern day LLM training/finetuning requires large model sizes (10B+) and large dataset sizes (1T+ tokens while pretraining and 1M+ in supervised fine-tuning). Our ultimate goal is to maximize _throughput_ to finish training as fast as possible (we want to process as many samples as possible). 
+
 ## Distributed Training and Scalability
 
 Training modern AI models, especially large deep networks like LLMs or huge vision models, often requires distributing the computation across multiple GPUs or even multiple machines. Distributed training is essential to handle _very large_ models (that don't fit in one GPU's memory) and to speed up training on _large datasets_ by parallelizing workload. There are several parallelism paradigms, each addressing different bottlenecks. 
