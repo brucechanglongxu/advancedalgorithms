@@ -4,6 +4,10 @@
 
 ## Data-Parallelism
 
+The most naive way for Data parallelism is to copy the model weight sinto multiple workers and assign a fraction of data to each worker to be processed at the same time. Naive DP cannot work well if the model size is larger than a single GPU node’s memory. Methods like GeePS (Cui et al. 2016) offload temporarily unused parameters back to CPU to work with limited GPU memory when the model is too big to fit into one machine. The data swapping transfer should happen at the backend and not interfere with training computation.
+
+
+
 <img width="951" height="392" alt="image" src="https://github.com/user-attachments/assets/79661557-5ad3-437c-aeb8-5c8a04dfad78" />
 
 DeepSpeed's ZeRO (Zero Redundancy Optimizer) is a form of _data parallelism_ that massively improves on memory efficiency. The main idea is that ZeRO exploits memory redundancy in data-parallel training and the latest improvements in fast inter-GPU communication to improve throughput, with some increase in communication volume, depending on the stage. ZeRO has two components - ZeRO-DP (data parallelism) and ZeRO-R (residual memory). The DeepSpeed team 
