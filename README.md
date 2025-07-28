@@ -1,4 +1,4 @@
-Modern day LLM training/finetuning requires large model sizes (10B+) and large dataset sizes (1T+ tokens while pretraining and 1M+ in supervised fine-tuning). Our ultimate goal is to maximize _throughput_ to finish training as fast as possible (we want to process as many samples as possible). 
+Modern day LLM training/finetuning requires large model sizes (10B+) and large dataset sizes (1T+ tokens while pretraining and 1M+ in supervised fine-tuning). Our ultimate goal is to maximize _throughput_ to finish training as fast as possible (we want to process as many samples as possible). LLMs require a lot of GPU vRAM to train because of large model weights (40B parameters may need >74GB for model weights in BF16) and also optimizer states (with vanilla AdamW need 12 bytes per parameter to store a copy of the model weights, momentum and variance parameters). 
 
 ## Distributed Training and Scalability
 
