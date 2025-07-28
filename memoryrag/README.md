@@ -1,1 +1,6 @@
-# Memory / RAG
+# Hallucination
+
+Extrinsic hallucinations in large language models (LLMs) refer to model outputs that are not grounded in the input context or real-world knowledge, typically memorized from pretraining data. These hallucinations occur when the model generates fabricated or inaccurate content that appears plausible. One root cause lies in the limitations of the pretraining corpus—massive, uncurated internet data that can be outdated or incorrect. Fine-tuning exacerbates this by introducing new or conflicting information in small quantities, often leading to increased hallucinations, especially when models struggle to integrate this new knowledge. Research from Gekhman et al. (2024) shows that while LLMs can eventually learn unknown facts via fine-tuning, doing so increases hallucination risk and slows learning.
+
+A growing body of work has developed tools and benchmarks to detect hallucinations. Techniques like FactualityPrompt, FActScore, SAFE, and FacTool quantify factuality by comparing model outputs against Wikipedia or web search evidence. Some methods, like SelfCheckGPT, work without external references by checking consistency across multiple model generations. Meanwhile, datasets like TruthfulQA and SelfAware test whether models know when they don't know something, revealing that models often fail adversarial or unanswerable questions. Calibration studies suggest that while LLMs can estimate their own uncertainty fairly well, reinforcement learning with human feedback (RLHF) often degrades this calibration.
+
