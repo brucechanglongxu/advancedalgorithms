@@ -15,4 +15,8 @@ Somewhere in the middle we can synchronize gradients globally once every $$x$$ i
 
 <img width="951" height="392" alt="image" src="https://github.com/user-attachments/assets/79661557-5ad3-437c-aeb8-5c8a04dfad78" />
 
-DeepSpeed's ZeRO (Zero Redundancy Optimizer) is a form of _data parallelism_ that massively improves on memory efficiency. The main idea is that ZeRO exploits memory redundancy in data-parallel training and the latest improvements in fast inter-GPU communication to improve throughput, with some increase in communication volume, depending on the stage. ZeRO has two components - ZeRO-DP (data parallelism) and ZeRO-R (residual memory). The DeepSpeed team 
+1. **Stage 1** partitions the optimizer states
+2. **Stage 2** partitions the optimizer and gradient states
+3. **Stage 3** partitions the optimizer, gradient and parameters
+
+DeepSpeed's [ZeRO](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) (Zero Redundancy Optimizer) is a form of _data parallelism_ that massively improves on memory efficiency. The main idea is that ZeRO exploits memory redundancy in data-parallel training and the latest improvements in fast inter-GPU communication to improve throughput, with some increase in communication volume, depending on the stage. ZeRO has two components - ZeRO-DP (data parallelism) and ZeRO-R (residual memory). The DeepSpeed team 
