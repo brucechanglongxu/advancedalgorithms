@@ -9,6 +9,9 @@ The most naive way for Data parallelism is to copy the model weight sinto multip
 1. **Bulk synchronous parallels (BSP):** Workers sync data at the end of every minibatch. It prevents model weights staleness and good learning efficiency but each machine has to halt and wait for others to send gradients.
 2. **Asynchronous parallel (ASP):** Every GPU worker processes the data asynchronously, no waiting or stalling. However, it can easily lead to stale weights being used and thus lower the statistical learning efficiency. Even though it increases the computation time, it may not speed up training time to convergence.
 
+<img width="1738" height="1936" alt="image" src="https://github.com/user-attachments/assets/89a47bba-94de-47a1-9cd2-8cdb64be9176" />
+
+Somewhere in the middle we can synchronize gradients globally once every $$x$$ iterations ($$x > 1$$). This is called _"gradient accumulation"_ in Distributed Data Parallel (DDP) since Pytorch v1.5 (Li et al. 2021). Bucketing gradients avoid immediate `AllReduce` operations but instead buckets multiple gradients into one `AllReduce` to improve throughput. Computation and communication scheduling optimization can be made based on the computation graph. 
 
 <img width="951" height="392" alt="image" src="https://github.com/user-attachments/assets/79661557-5ad3-437c-aeb8-5c8a04dfad78" />
 
