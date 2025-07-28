@@ -1,3 +1,5 @@
 # Contrastive Learning
 
 Much recent progress in AI has come from techniques that do not require labeled data but instead create self-supervised learning objectives. Two major families are contrastive learning and masked prediction strategies. These approaches enable learning rich representations from unlabeled data, which can then be fine-tuned for downstream tasks – crucial for leveraging the vast amounts of raw data available.
+
+Contrastive learning is about learning an embedding space in which similar inputs are pulled together and dissimilar inputs are pushed apart. In computer vision, _"similar"_ often means two different augmentations of the same image. A seminal example is **SimCLR (Simple Contrastive Learning of Representations)** by Google Brain. In SimCLR, for each image, two augmented views are generated (random crops, color jitter, flip, blur etc.) forming a positive pair. A deep network (CNN or ViT) encodes each view into a representation vector, then a small projection MLP maps it to a latent space where the contrastive loss is applied. 
