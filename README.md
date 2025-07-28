@@ -1,3 +1,3 @@
-# Advanced Algorithms
+# Mixed Precision and Efficient Training
 
-- Formal Verification
+Another key to scaling training is using lower numerical precision. _Mixed precision training_ combines 16-bit floating point (FP16 and BFloat16) with 32-bit (FP32) in a way that doesn't degrade model quality [See NVIDIA blog]. Neural networks don't always need 32-bit precision for every calculation - using FP16 halves memory per value and can significantly speed up tensor operations on modern GPUs (which have specialized hardware, Tensor Cores, for low-precision matrix math). Mixed precision typically keys a master copy of weights in FP32 to accumulate small gradient updates accurately, but does forward and backward computations in FP16. 
