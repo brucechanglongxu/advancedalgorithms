@@ -6,7 +6,9 @@ The transformer architecture is a neural network design that processes sequences
 4. **Positional Encoding:** to inject sequence order information.
 5. **Softmax Output Layer (Final):** for producing probabilities. 
 
-Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ Weights fall into several categories, the first is the token embedding matrix $$E$$ which has shape $$V \times d$$ (where $$V$$ is the vocabulary size, and $$d$$ is the embedding dimension). This maps each discrete token into a continuous embedding (vector) space [^5] (think of it like a semantic lookup table). We can decrease the size of this matrix by using [byte-level/character-level](https://github.com/brucechanglongxu/advancedalgorithms/blob/main/transformer/tokenization.md) tokenization instead of a rigid tokenization scheme like BPE. 
+Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ Weights fall into several categories, the first is the token embedding matrix $$E$$ which has shape $$V \times d$$ (where $$V$$ is the vocabulary size, and $$d$$ is the embedding dimension). This maps each discrete token into a continuous embedding (vector) space [^5] (think of it like a semantic lookup table, the word "dog" would have its own row in $$E$$). We can decrease the size of this matrix by using [byte-level/character-level](https://github.com/brucechanglongxu/advancedalgorithms/blob/main/transformer/tokenization.md) tokenization instead of a rigid tokenization scheme like BPE. 
+
+Now for each of the $$L$$ Transformer layers, we have A. Multi-Head Self-Attention (MHSA) and B. Feedforward Networks (FFN). In the MHSA blocks, each head has its own set of projection matrices $$W_Q, W_K, W_V$$ with shape $$d \times d_h$$ (where $$d_h = d / h$$ is the number of heads) which projects the input embeddings to Queries, Keys, and Values [^4], and have an output projection matrix $$W_O$$ with shape $$d \times d$$. 
 
 ## Encoder-Decoder Architectures
 
