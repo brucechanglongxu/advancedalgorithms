@@ -22,12 +22,13 @@ Think of arithmetic intensity as a knob we can turn. Left is _"memory limited"_ 
 3. **Reduce memory footprint:** Use quantization (`int8`), compression, or sparsity
 4. **Avoid recomputation or scatter-gather:** These patterns hurt reuse and drive down intensity.
 
+<center>
 | Op        | Math                        | Memory                  | Intensity    | Notes                    |
 |-----------|-----------------------------|--------------------------|--------------|--------------------------|
 | `ReLU`    | 1 op per element            | 2 bytes (read+write)     | 0.5          | Memory-bound             |
 | `MatMul`  | N² × K ops                  | 2 × N × K + N × N bytes  | High (>>100) | Math-bound               |
 | `Conv2D`  | High reuse of input patches | Moderate memory          | High         | Tensor Cores thrive here |
 | `Softmax` | Small ops, scattered reads  | Many reads               | Low          | Memory-bound             |
-
+</center>
 
 [^1]: It may be worthwhile to distinguish information and knowledge here, though this could lead to an entirely new post about epistemiology. 
