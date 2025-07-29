@@ -6,7 +6,10 @@
 自己无法胜任这千斤重担
 有什么资格说你不愿意
 连你自己身上的责任都看不到
-
+永世不能再见到天日
+白纸黑字写下来
+发誓你再也不会出手
+你觉得我是乱世之因？
 
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
@@ -15,6 +18,10 @@ We want to select the **right samples** with active learning, and the best strat
 ## Contrastive Active Learning
 
 _Contrastive Active Learning_ (Margatina) relies on contrastive learning principles to find representative samples - it focuses on finding data points that are _semantically close in representation space, **yet belong to different classes**_ as the most informative samples for training. 
+
+In deep learning, samples from different classes can sometimes have _overlapping_ or _ambiguous_ representations in the latent feature space (for example embeddings from the penultimate layer of a neural network), these are the examples that the model is most confused about, even if it is confident. 
+
+> **Key Idea:** If an unlabeled sample looks very similar (in feature space) to labeled examples, but the model predicts something (class) quite different for it - then that sample is likely to be a contrastive, **high-value** acquisition
 
 [1] Margatina et al. _“Active Learning by Acquiring Contrastive Examples.”_ EMNLP 2021.
 [2] Ash, Jordan et al. _"Deep Batch Active Learning by Diverse Gradient Embeddings."_ ICLR 2020
