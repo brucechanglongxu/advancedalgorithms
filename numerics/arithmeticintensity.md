@@ -29,4 +29,18 @@ Think of arithmetic intensity as a knob we can turn. Left is _"memory limited"_ 
 | `Conv2D`  | High reuse of input patches | Moderate memory          | High         | Tensor Cores thrive here |
 | `Softmax` | Small ops, scattered reads  | Many reads               | Low          | Memory-bound             |
 
+## Training vs Inference
+
+Inference workloads are usually smaller, latency-sensitive, and more likely to be underutilizing the GPU if we are not careful. 
+1. **Training:** Large batch matmuls, gradients, backpropagation. 
+2. **Inference:** Often batch size 1, small activations. 
+
+At _**training time**_, we use large batches and long sequences. Operations like matmul, convolution, attention have _high reuse_ and _large tensors_, so **high arithmetic intensity is easier to achieve.** Therefore training is often math-bound on modern GPUs with Tensor Cores. For example `Linear(batch=512)` is very math-heavy, and fused optimizers (e.g. AdamW, LAMB) have even more math than inference. 
+
+At _**inference time**_ often small batch sizes e.g. `batch=1` are used for real-time applications. Many ops (ReLU, LayerNorm, SoftMax) are _memory bound_. _KV cache_ reads also dominate in transformers, so there is lots of bandwidth but little math. This can easily become memory bound (or even latency bound if the GPU SMs are mostly idle). For example, `MatMul(batch=1)` is very low in AI (arithmetic intensity), and `ReLU` and `SoftMax` are still memory bound regardless of batch size. Hence for inference optimization, it is even more important to **boost arithmetic intensity artificially**; because we can't increase batch size (due to latency requirements) and we are more prone to underutilizing SMs. This is why many inference libraries (e.g. [TensorRT](https://github.com/brucechanglongxu/TensorRT-LLM), [ONNX Runtime](https://github.com/brucechanglongxu/onnxruntime) or [FlashAttention](https://github.com/brucechanglongxu/flash-attention)) do things like:
+- Operator fusion (to reduce memory reads)
+- Quantization (to reduce memory bandwidth per op)
+- Tiling / kernel scheduling (to increase reuse and math per byte)
+and also why techniques like speculative decoding, KV caching, and prefetching matter a lot in inference to _increase useful FLOPs per byte_. 
+
 [^1]: It may be worthwhile to distinguish information and knowledge here, though this could lead to an entirely new post about epistemiology. 
