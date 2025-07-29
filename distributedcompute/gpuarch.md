@@ -1,3 +1,12 @@
+## TLDR
+1. Loop up the nuber of SMs on the GPU, and determine the ops:byte ratio for the GPU
+2. Compute the arithmetic intensity for the algorithm (FLOPs calculation)
+3. Determine if there is sufficient parallelism to saturate the GPU by estimating the number and size of thread blocks. If the number of thread blocks is at least roughly 4x higher than the number of SMs, and thread blocks consist of a few hundred threads each, then there is sufficient parallelism. 
+4. The most likely performance limiter is:
+a. Latency if there is not sufficient parallelism
+b. Math if there is sufficient parallelism and algorithm arithmetic intensity is higher than the GPU ops:byte ratio
+c. Memory if there is sufficient parallelism and algorithm arithmetic intensity is lower than GPU ops:byte ratio.
+
 ## Understanding FLOPs
 
 **FLOP (Floating Point operation):** Refers to a single arithmetic operation that involves floating-point numbers such as addition, subtraction, multiplication and division. Each of these counts as _one FLOP_ assuming they involve floating-point data types like `float32` or `float16`. 
