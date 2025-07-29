@@ -42,6 +42,19 @@ Each SM executes one or more thread blocks, and a thread block is assigned to a 
 
 ![Alt text](image-2.png)
 
+## Understanding GPU Performance
+_Math-bound vs Memory-bound vs Latency-bound_
+
+Every operation involves 1. Reading inputs from memory 2. Performing math 3. Writing outputs. If we let `T_mem = bytes / memory_bandwidth` and `T_math = FLOPs / math_bandwidth`, then the total time is equal to the maximum of `T_mem` and `T_math`. This means that if math takes longer, we are _math-limited_, if memory takes longer we are _memory-limited_ and if neither math nore memory is saturated (e.g. due to a small workload) we are _latency limited_. 
+
+Whilst modern GPUs are very powerful, to use them to their full potential, we need to understand what _limits_ the speed of our code. Every GPU operation falls into one of three performance regimes:
+
+1. **Memory-Bound:** The GPU spends more time reading/writing data than doing math. 
+2. **Math-Bound:** 
+3. **Latency-Bound:** 
+
+
+
 [^1]: Tensor Cores are specialized matrix-multiply-accumulate (MMA) units introduced in NVIDIA Volta and improved in Ampere and Hopper. They are designed for _dense, structured_ operations on _small matrices_ (e.g. 4x4, 8x8, 16x16 tiles). They are incredibly efficient at batched matrix multiplication e.g. GEMM, CNNs, transformers, and operate through fused operations that minimize instruction overhead. To use them, our operation must match the MMA interface `D = A \times B + C` where $$A,B,C,D$$ are dense matrices. However **many deep learning/numerical ops don't naturally fit this including ReLU/sigmoid/tanh (element-wise ops)**, broadcasting ops (scalar add, batch norm), control flow/irregular indexing (gather,scatter,masked selection) and sparse/unstructured ops(dynamic shapes and pointer-based memory access). These **cannot be turned into MMA ops** so tensor cores have no advantage and _often cannot be used_, so we must route to CUDA cores (general-purpsoe floating-point/vector ALUs), optimized for warp-synchronous SIMD-style execution, capable of issuing scalar/elementwise instructions per-thread. 
 [^2]: Frameworks like cuDNN, cuBLAS, and TVM try to transform operations to match MMA blocks if possible (i.e. through tiling, fusion or lowering to matmul) but when this isn't feasible they let CUDA cores handle the workload. 
 
