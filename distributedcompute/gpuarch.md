@@ -22,7 +22,7 @@ To utilize their parallel resources, GPUs execute many threads concurrently; GPU
 
 **Hierarchy:** Thread -> Block -> Grid
 
-Each SM executes one or more thread blocks, and a thread block is assigned to a _single SM_ and cannot span SMs. Threads within a block can share memory and synchronize through `__syncthreads()`. 
+Each SM executes one or more thread blocks, and a thread block is assigned to a _single SM_ and cannot span SMs. Threads within a block can share memory and synchronize through `__syncthreads()`. If we launch only a few thread blocks, not all the SMs get work, so we underutilize the GPU. If we launch many thread blocks, they execute in waves, so the final wave might be small hence underutilizing the SMs inducing the _"tail effect"_. **High performance GPU code usually launches a large multiple of the SM count e.g. typically more than four times the number of SMs** to saturate the GPU and avoid performance cliffs at the tail. For higher-end GPUs, typically only launched with fewer than $$300$$ thread blocks should be examined for tail effects. 
 
 ![Alt text](image-2.png)
 
