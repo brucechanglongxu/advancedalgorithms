@@ -4,6 +4,8 @@ In tasks like language modeling or image understanding, context matters. The mea
 
 ## Encoder-Decoder Architectures
 
+Encoders are neural network components that transform input data into a compact representation or "encoding." They capture essential features of the input, reducing dimensionality while preserving important information. In natural language processing, encoders often process sequences of words or tokens.
+
 ![Alt text](image.png)
 
 [^1]:
