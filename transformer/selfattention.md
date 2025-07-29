@@ -8,6 +8,14 @@ The transformer architecture is a neural network design that processes sequences
 
 Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ 
 
+## Encoder-Decoder Architectures
+
+Encoders are neural network components that transform input data into a compact representation or "encoding." They capture essential features of the input, reducing dimensionality while preserving important information. In natural language processing, encoders often process sequences of words or tokens. 
+
+![Alt text](image.png)
+
+One of the key differences between encoder-decoder and decoder-only architectures is that the former allows for _bidirectional attention_ [^3] (in the encoder), but decoder-only models are restricted to causal (left-to-right) attention.
+
 ## (Multi-Head) Self-Attention
 
 $$A(Q, K, V) = s(\frac{QK^T}{\sqrt{d_k}}) \cdot V$$
@@ -25,14 +33,6 @@ Mathematically, the goal of self-attention is to transform each input (embedded 
 ## Positional Encoding
 
 ## Softmax Output Layer
-
-## Encoder-Decoder Architectures
-
-Encoders are neural network components that transform input data into a compact representation or "encoding." They capture essential features of the input, reducing dimensionality while preserving important information. In natural language processing, encoders often process sequences of words or tokens. 
-
-![Alt text](image.png)
-
-One of the key differences between encoder-decoder and decoder-only architectures is that the former allows for _bidirectional attention_ [^3] (in the encoder), but decoder-only models are restricted to causal (left-to-right) attention.
 
 [^0]:
 [^1]:
