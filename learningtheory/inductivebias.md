@@ -8,3 +8,8 @@ In simple terms:
 ```
 An inductive bias tells the model what patterns to expect before it even sees any data
 ```
+When we design a new architecture, we’re implicitly or explicitly injecting a belief about the structure of the input space. Good inductive biases:
+- Help generalize from fewer examples
+- Reduce parameter count
+- Improve interpretability or robustness
+Inductive biases can come from _architecture_, _data_, _training objective_ and even _optimization_. 
