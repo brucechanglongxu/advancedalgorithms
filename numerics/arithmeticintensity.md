@@ -15,6 +15,11 @@ Ultimately, a GPU has two main drivers of performance - math throughput (how fas
 1. High arithmetic intensity can be amplified by _caching_ and _reuse_ i.e. if we reuse the same data across threads, we "pay" the memory cost once but do math many times, boosting arithmetic intensity.
 2. If we constantly access new, uncached data, we are limited by _memory bandwidth_, which is what kills intensity in element-wise ops like ReLU or layer norm. 
 
-Think of arithmetic intensity as a knob we can turn. Left is "memory limited" (ReLU, batch norm, low reuse) and right is "math limited" (matmul, attention, big convolutions). The farther right we go, the more likely our GPU's math units (e.g. Tensore Cores) are doing real work.
+Think of arithmetic intensity as a knob we can turn. Left is _"memory limited"_ (ReLU, batch norm, low reuse) and right is _"math limited"_ (matmul, attention, big convolutions). The farther right we go, the more likely our GPU's math units (e.g. Tensore Cores) are doing real work. To increase arithmetic intensity we have the following options:
+
+1. **Increase reuse:** Use shared memory, loop tiling or batching (e.g. FlashAttention)
+2. **Do more math per byte:** Fuse multiple operations together (e.g. bias/ReLU/matmul or MMA)
+3. **Reduce memory footprint:** Use quantization (`int8`), compression, or sparsity
+4. **Avoid recomputation or scatter-gather:** These patterns hurt reuse and drive down intensity.
 
 [^1]: It may be worthwhile to distinguish information and knowledge here, though this could lead to an entirely new post about epistemiology. 
