@@ -37,4 +37,4 @@ One of the key differences between encoder-decoder and decoder-only architecture
 [^0]:
 [^1]:
 [^2]: 
-[^3]: Each token can attend to all other tokens in the same sequence, including tokens **before and after itself**. It is a full reader that can look ahead and behind the current token. Decoder models are trained on 
+[^3]: Each token can attend to all other tokens in the same sequence, including tokens **before and after itself**. It is a full reader that can look ahead and behind the current token. This highlights why encoder-decoder models would be highly inefficient for chatbots, because every time we have a new line in our conversation, _we would need to encode the entire transcript again_ (to look "bidirectionally") before subsequently decoding to do next token generation. 
