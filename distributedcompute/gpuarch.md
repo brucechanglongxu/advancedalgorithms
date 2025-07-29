@@ -11,3 +11,5 @@ It is helpful to understand the basics of GPU execution when reasoning about how
 ![Alt text](image.png)
 
 Let's take the statistics of an A100 GPU for example, this contains 108 SMs, a 40MB L2 cache, and up to 2039 GB/s bandwidth from 80GB of HBM2 memory. Each SM has its own instruction schedulers and various instruction execution pipelines. _Multiply-add_ is the most frequent operation in modern neural networks, which acts as a building block for fully-connected and convolutional layers, both of which can be viewed as a collection of vector dot-products. **Note that this is different in the transformer-driven language model era**. 
+
+![Alt text](image-1.png)
