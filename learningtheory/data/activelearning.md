@@ -11,12 +11,18 @@
 发誓你再也不会出手
 你觉得我是乱世之因？
 开张酬宾
+你这有点敷衍了
+杀机暗藏
 
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
 We want to select the **right samples** with active learning, and the best strategies explicitly model epistemic uncertainty, enforce data diversity, or anticipate downstream model improvement. When working under tight annotation budgets (e.g. medical AI, satellite vision, robotics) active learning principles become critical. 
 
 ## Uncertainty Sampling
+
+Suppose that we have a model trained on a small seed set or pseudo-labels, and we're working in a low-label-budget setting (e.g. medical/surgical video). The basic assumption of uncertainty sampling is that if the model is unsure, then the sample is likely close to a decision boundary - so labeling it will help the model the most. 
+
+> **Key Idea:** Label the examples that the model is most unsure about. 
 
 ## Diversity Sampling
 
