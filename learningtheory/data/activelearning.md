@@ -13,6 +13,15 @@
 开张酬宾
 你这有点敷衍了
 杀机暗藏
+怨气
+共同追逐
+贪恋权位
+托付
+妥协
+守护梦想
+必经之路
+事在人为
+拭目以待
 
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
