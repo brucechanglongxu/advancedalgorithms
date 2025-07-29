@@ -1,5 +1,7 @@
 # [NVIDIA GPU Architecture](https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html)
 
-It is helpful to understand the basics of GPU execution when reasoning about how efficiently particular layers or neural networks are utilizing a given GPU. First we will dive into the basic structure of GPU architecture. Ultimately, the GPU is a _highly parallel processor_ that is composed of processing elements and a memory hierarchy. At a high-level there are multiple **Streaming Multiprocessors (SMs)**, an on-chip L2 cache, and high-bandwidth DRAM. 
+It is helpful to understand the basics of GPU execution when reasoning about how efficiently particular layers or neural networks are utilizing a given GPU. First we will dive into the basic structure of GPU architecture. Ultimately, the GPU is a _highly parallel processor_ that is composed of processing elements and a memory hierarchy. At a high-level there are multiple **Streaming Multiprocessors (SMs)**, an on-chip L2 cache, and high-bandwidth DRAM. Arithmetic and other instructions are executed by the SMs; data and code are accessed from DRAM through the L2 cache. 
 
 ![Alt text](image.png)
+
+Let's take the statistics of an A100 GPU for example, this contains 108 SMs, a 40MB L2 cache, and up to 2039 GB/s bandwidth from 80GB of HBM2 memory. Each SM has its own instruction schedulers and various instruction execution pipelines. _Multiply-add_ is the most frequent operation in modern neural networks, which acts as a building block for fully-connected and convolutional layers, both of which can be viewed as a collection of vector dot-products. **Note that this is different in the transformer-driven language model era**. 
