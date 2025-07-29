@@ -6,7 +6,7 @@ The transformer architecture is a neural network design that processes sequences
 4. **Positional Encoding:** to inject sequence order information.
 5. **Softmax Output Layer (Final):** for producing probabilities. 
 
-Let's look at _contrastive learning_ in the context of transformer-based architectures. 
+Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ 
 
 ## (Multi-Head) Self-Attention
 
