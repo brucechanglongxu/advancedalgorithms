@@ -6,7 +6,7 @@ The transformer architecture is a neural network design that processes sequences
 4. **Positional Encoding:** to inject sequence order information.
 5. **Softmax Output Layer (Final):** for producing probabilities. 
 
-Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ 
+Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ Weights fall into several categories, the first is the token embedding matrix $$E$$ which has shape $$V \times d$$ (where $$V$$ is the vocabular size, and $$d$$ is the embedding dimension). This maps each discrete token into a continuous embedding (vector) space [^5] (think of it like a semantic lookup table). 
 
 ## Encoder-Decoder Architectures
 
@@ -38,3 +38,5 @@ Mathematically, the goal of self-attention is to transform each input (embedded 
 [^1]:
 [^2]: 
 [^3]: Each token can attend to all other tokens in the same sequence, including tokens **before and after itself**. It is a full reader that can look ahead and behind the current token. This highlights why encoder-decoder models would be highly inefficient for chatbots, because every time we have a new line in our conversation, _we would need to encode the entire transcript again_ (to look "bidirectionally") before subsequently decoding to do next token generation. 
+
+[^5]: Technically, we can remove or randomize $$E$$ at the start rather than have it as a learnable parameter, however the other parts of the transformer network will subsequently need to learn to compensate - can the rest of the transformer absorb what is usually learned in embeddings? Most likely, given enough depth and data. Ablation studies in early BERT/GPT work show that freezing $$E$$ often degrades performance. $$E$$ encodes prior knowledge about token similarity (e.g. "cat" is similar to "dog" - semantic compression) and avoids forcing deeper layers to relearn lexical properties from scratch. **Token-free** transformers use characters/bytes (the must fundamental building blocks) as inputs so the vocabular is tiny, and the embedding matrix is very small, and learn representations of words/characters from scratch. 
