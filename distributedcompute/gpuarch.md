@@ -18,7 +18,11 @@ FP16 operations can be executed in either Tensor Cores or NVIDIA CUDA cores. In 
 
 To utilize their parallel resources, GPUs execute many threads concurrently; GPUs execute functions using a 2-level hierarchy of threads - a given function's threads are grouped into equally-sized _thread blocks_, and a set of thread blocks are launched to execute the function. GPUs hide dependent instruction latency by switching to the execution of other threads. Thus the number of threads needed to effectively utilize a GPU is much higher than the number of cores or instruction pipelines. 
 
-**2-level thread hierarchy:**
+**2-level thread hierarchy:** Below, each green rectangle represents a thread block - the left stack has 8 thread blocks (which could represent the first wave), the right stack has 4 thread blocks (which represents the second wave). The GPU (assumed to have 8 SMs) executes one thread block per SM at a time. Hence we see that for the first 8 thread blocks, we have 100% SM utilization, and for the last 4 thread blocks, we have 50% SM utilization ("tail effect"). Threads are the smallest unit of computation, each thread runs the same kernel code. The Thread Blocks groups many threads together (e.g. 256/1024 threads/block), and a Grid is a full set of thread blocks that are launched by the kernel.
+
+**Hierarchy:** Thread -> Block -> Grid
+
+Each SM executes one or more thread blocks, and a thread block is assigned to a _single SM_ and cannot span SMs. Threads within a block can share memory and synchronize through `__syncthreads()`. 
 
 ![Alt text](image-2.png)
 
