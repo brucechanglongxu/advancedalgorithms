@@ -26,7 +26,7 @@ _Contrastive Active Learning_ (Margatina) relies on contrastive learning princip
 
 In deep learning, samples from different classes can sometimes have _overlapping_ or _ambiguous_ representations in the latent feature space (for example embeddings from the penultimate layer of a neural network), these are the examples that the model is most confused about, even if it is confident. 
 
-> **Key Idea:** If an unlabeled sample looks very similar (in feature space) to labeled examples, but the model predicts something (class) quite different for it - then that sample is likely to be a contrastive, **high-value** acquisition
+> **Key Idea:** If an unlabeled sample looks very similar (in feature space) to labeled examples, but the model predicts something (class) quite different for it - then that sample is likely to be a contrastive, **high-value** acquisition. The core premise for this is that _feature space is not the same as prediction space_ (because the model is not perfect, especially early on in training). 
 
 1. For each unlabeled sample, compute its feature embedding (e.g. through a ResNet or ViT)
 2. Find its nearest labeled neighbors in the feature space
