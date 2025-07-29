@@ -4,3 +4,10 @@ _Arithmetic intensity_ is a metric calculated across the entire operation/kernel
 
 $$\textbf{Arithmetic Intensity} = \frac{\textbf{Total FLOPs performed}}{\textbf{Total bytes transferred to/from memory}}$$
 
+It answers the following question:
+```
+For every byte I load from memory, how much math do I do before I need another one?
+```
+it's sort of like asking _"am I thinking hard about every piece of information I learn?"_ or _"am I mindlessly munching data without doing much with it?"_. From a human learning perspective, if we were all processing elements and trying to learn new concept from teacher (i.e. compute kernel launched) - **we want a higher arithmetic intensity** so that we are getting the most understanding/knowledge from each piece of information consumed [^1].
+
+[^1] It may be worthwhile to distinguish information and knowledge here, though this could lead to an entirely new post about epistemiology. 
