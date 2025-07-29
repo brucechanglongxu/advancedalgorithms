@@ -1,3 +1,5 @@
+## Understanding FLOPs
+
 **FLOP (Floating Point operation):** Refers to a single arithmetic operation that involves floating-point numbers such as addition, subtraction, multiplication and division. Each of these counts as _one FLOP_ assuming they involve floating-point data types like `float32` or `float16`. 
 
 In the context of deep-learning in a matrix multiply like `C = A \times B`, every dot product of row `A` and column of `B` involves many _multiply-adds_. Each individual multiply-add (e.g. `a * b + c`) is typically counted as 2 FLOPs i.e. one multiply and one addition. FLOPs is generally a good performance metric - how many FLOPs our GPU or CPU can do per second. An NVIDIA A100 has a peak performance of 312 trillion FLOPs per second (e.g. 312 teraFLOPs). 
