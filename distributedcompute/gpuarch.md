@@ -7,6 +7,11 @@ a. Latency if there is not sufficient parallelism
 b. Math if there is sufficient parallelism and algorithm arithmetic intensity is higher than the GPU ops:byte ratio
 c. Memory if there is sufficient parallelism and algorithm arithmetic intensity is lower than GPU ops:byte ratio.
 
+[Optimizing linear/fully connected layers](https://docs.nvidia.com/deeplearning/performance/dl-performance-fully-connected/index.html)
+[Optimizing convolutional layers](https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html#:~:text=User%27s%20Guide%2C-,NVIDIA%20Optimizing%20Convolutional%20Layers%20User%27s%20Guide,-%2C%20and%20NVIDIA%20Optimizing)
+[Optimizing recurrent layers](https://docs.nvidia.com/deeplearning/performance/dl-performance-recurrent/index.html)
+[Optimizing memory-bound layers](https://docs.nvidia.com/deeplearning/performance/dl-performance-memory-bound/index.html)
+
 ## Understanding FLOPs
 
 **FLOP (Floating Point operation):** Refers to a single arithmetic operation that involves floating-point numbers such as addition, subtraction, multiplication and division. Each of these counts as _one FLOP_ assuming they involve floating-point data types like `float32` or `float16`. 
