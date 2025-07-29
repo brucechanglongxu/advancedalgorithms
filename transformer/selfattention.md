@@ -6,7 +6,7 @@ The transformer architecture is a neural network design that processes sequences
 4. **Positional Encoding:** to inject sequence order information.
 5. **Softmax Output Layer (Final):** for producing probabilities. 
 
-Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ Weights fall into several categories, the first is the token embedding matrix $$E$$ which has shape $$V \times d$$ (where $$V$$ is the vocabular size, and $$d$$ is the embedding dimension). This maps each discrete token into a continuous embedding (vector) space [^5] (think of it like a semantic lookup table). 
+Let's dive into the central question of _what actually gets learned in a transformer during pretraining?_ Weights fall into several categories, the first is the token embedding matrix $$E$$ which has shape $$V \times d$$ (where $$V$$ is the vocabulary size, and $$d$$ is the embedding dimension). This maps each discrete token into a continuous embedding (vector) space [^5] (think of it like a semantic lookup table). We can decrease the size of this matrix by using [byte-level/character-level] tokenization instead of a rigid tokenization scheme like BPE. 
 
 ## Encoder-Decoder Architectures
 
