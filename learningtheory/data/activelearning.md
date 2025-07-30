@@ -1,66 +1,5 @@
 # [Active Learning](https://burrsettles.com/pub/settles.activelearning.pdf)
 
-途中遇上的，总会道别，有缘再见，就此别过
-文武双全
-避风头
-自己无法胜任这千斤重担
-有什么资格说你不愿意
-连你自己身上的责任都看不到
-永世不能再见到天日
-白纸黑字写下来
-发誓你再也不会出手
-你觉得我是乱世之因？
-开张酬宾
-你这有点敷衍了
-杀机暗藏
-怨气
-共同追逐
-贪恋权位
-托付
-妥协
-守护梦想
-必经之路
-事在人为
-拭目以待
-拖了幼稚，成长起来
-大可放心
-合格
-替你们守住个天下
-太平盛世
-寒门出身
-谨慎
-远道而来
-如有变故，马踏青山
-万无一失的局面
-化险为夷
-骑虎难下
-局面
-贪花好色
-总计
-稍有疏漏，天翻地覆
-细算因果
-权势滔天
-心机手段
-牵连甚广
-势不两立
-天意使然
-心机深沉
-不谋而合
-视而不见
-难以弥补
-根基深厚
-小事一桩
-名不虚传
-雅量高致
-
-## 千斤重担
-
-中原乱世，烽烟四起。传言中，那位**寒门出身**的少年，曾经立下宏愿，要**替你们守住个天下**，要为苍生（老百姓）换来**太平盛世**。可这天下，从来不是靠一人之力能守得住的。
-
-他名唤李之行，年少时便已**文武双全**，一手剑术、一手兵法，天下无双。可惜时也命也，动乱四起，他的名字被卷进一场**牵连甚广**的争斗当中。再一次俺也行军中，李之行望着天边低垂的星月，喃喃道：“**途中遇上的，总会道别，有缘再见，就此别过**。” 他知道，眼前这场征战，不见得人人能回。
-
-此战名为“青山战争“，据说是一场万**无一失的局面**，可**稍有疏漏，天翻地覆**。
-
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
 We want to select the **right samples** with active learning, and the best strategies explicitly model epistemic uncertainty, enforce data diversity, or anticipate downstream model improvement. When working under tight annotation budgets (e.g. medical AI, satellite vision, robotics) active learning principles become critical. 
@@ -81,6 +20,14 @@ In deep learning, samples from different classes can sometimes have _overlapping
 
 > **Key Idea:** If an unlabeled sample looks very similar (in feature space) to labeled examples, but the model predicts something (class) quite different for it - then that sample is likely to be a contrastive, **high-value** acquisition. The core premise for this is that _feature space is not the same as prediction space_ (because the model is not perfect, especially early on in training). 
 
+## Expected Gradient Length
+
+**EGL** quantifies, for each unlabeled data point, how much labeling this point would _change the model parameters_ if we knew its label. Instead of measuring uncertainty over predictions, EGL measures _expected change in the model itself_. It is a first order (works with parameter gradients from backpropagation) method, as opposed to uncertainty-based methods which are second order; hence it is more computationally expensive than entropy/uncertaint-based methods. 
+
+> **Key Idea:** We should pick samples that would cause the biggest update to the model if we labeled them. 
+
+
+
 1. For each unlabeled sample, compute its feature embedding (e.g. through a ResNet or ViT)
 2. Find its nearest labeled neighbors in the feature space
 3. Compare the model's predictions on the unlabeled sample vs. neighbors through KL divergence _(this tells us how different our model's predictions are for similar-looking samples)_. High KL means High contrastiveness, and higher labeling priority. 
@@ -90,3 +37,5 @@ In deep learning, samples from different classes can sometimes have _overlapping
 [2] Ash, Jordan et al. _"Deep Batch Active Learning by Diverse Gradient Embeddings."_ ICLR 2020
 
 [3] Gal, Yarin, and Zoubin Ghahramani. _"Dropout as a Bayesian approximation."_ ICML 2016
+
+[4] Weng, Lilian. (Feb 2022). Learning with not enough data part 2: active learning. Lil’Log.
