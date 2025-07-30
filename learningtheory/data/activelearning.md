@@ -4,15 +4,15 @@ What should we do when we are faced with a limited about of labeled data for sup
 
 We want to select the **right samples** with active learning, and the best strategies explicitly model epistemic uncertainty, enforce data diversity, or anticipate downstream model improvement. When working under tight annotation budgets (e.g. medical AI, satellite vision, robotics) active learning principles become critical. Now what if we have multiple-related tasks that we would like to have labeled data for, **multi-task active learning** [^1] is a framework that enables us to selected unlabeled data points that are informative to all such tasks simultaneously (where the data is shared across tasks, or each data point has multiple labels). 
 
-> Since we are paying to label a particular data point/frame, shouldn't we squeeze out as much insight/utility for multiple different tasks?
-
-
+> **Multi-task Active Learning:** Since we are paying to label a particular data point/frame, shouldn't we squeeze out as much insight/utility for multiple different tasks?
 
 ## Uncertainty Sampling
 
 Suppose that we have a model trained on a small seed set or pseudo-labels, and we're working in a low-label-budget setting (e.g. medical/surgical video). The basic assumption of uncertainty sampling is that if the model is unsure, then the sample is likely close to a decision boundary - so labeling it will help the model the most. 
 
 > **Key Idea:** Label the examples that the model is most unsure about. 
+
+The issue with this approach is that we are selecting data points that are uncertain _according to our current model_ and leads to data that is skewed towards our specific model's weakness - what if another model class doesn't
 
 ## Diversity Sampling
 
