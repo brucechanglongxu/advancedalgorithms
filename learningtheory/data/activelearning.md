@@ -53,6 +53,14 @@
 名不虚传
 雅量高致
 
+## 千斤重担
+
+中原乱世，烽烟四起。传言中，那位**寒门出身**的少年，曾经立下宏愿，要**替你们守住个天下**，要为苍生（老百姓）换来**太平盛世**。可这天下，从来不是靠一人之力能守得住的。
+
+他名唤李之行，年少时便已**文武双全**，一手剑术、一手兵法，天下无双。可惜时也命也，动乱四起，他的名字被卷进一场**牵连甚广**的争斗当中。再一次俺也行军中，李之行望着天边低垂的星月，喃喃道：“**途中遇上的，总会道别，有缘再见，就此别过**。” 他知道，眼前这场征战，不见得人人能回。
+
+此战名为“青山战争“，据说是一场万**无一失的局面**，可**稍有疏漏，天翻地覆**。
+
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
 We want to select the **right samples** with active learning, and the best strategies explicitly model epistemic uncertainty, enforce data diversity, or anticipate downstream model improvement. When working under tight annotation budgets (e.g. medical AI, satellite vision, robotics) active learning principles become critical. 
