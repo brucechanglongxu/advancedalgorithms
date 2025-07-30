@@ -16,6 +16,14 @@ In LLM inference, traditional decoding (e.g. greedy or beam search) is _sequenti
 
 We use a _small, fast_ model (like T5-small) to guess the next 3-8 tokens, and then run a big, slow model (like T5-XXL) once to check those guesses in parallel. We accept guesses that look good enough, and then fix mistakes with one true token from the big model. We think of the big model as a slow, meticulous writer, whilst the small model that runs ahead is a _reckless assistant_. 
 
+Let's say that the user prompt is `"The mitochondria is the"`, we will then use a small draft model to generate `k` tokens in parallel:
+
+```
+["powerhouse", "of", "the", "cell"]
+```
+
+We then feed these tokens back into the _full model_, one at a time, and at each step, compute the full model's log-probability over tokens. We then accept the draft token if it matches the full model's top prediction, and stop at the first rejection and continue from there using the full model. we continue decoding (either with another roudn of speculative decoding or regular decoding). 
+
 ## Medusa
 
-
+MEDUSA replaces the need for an external _draft model_ in speculative decoding by attaching multiple decoding heads (Medusa Heads) directly on top of the frozen or jointly fine-tuned LLM backbone. This allows 
