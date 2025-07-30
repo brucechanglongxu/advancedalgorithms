@@ -2,7 +2,11 @@
 
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
-We want to select the **right samples** with active learning, and the best strategies explicitly model epistemic uncertainty, enforce data diversity, or anticipate downstream model improvement. When working under tight annotation budgets (e.g. medical AI, satellite vision, robotics) active learning principles become critical. Now what if we have multiple-related tasks that we would like to have labeled data for, **multi-task active learning** is a framework that enables us to selected unlabeled data points that are informative to all such tasks simultaneously (where the data is shared across tasks, or each data point has multiple labels). 
+We want to select the **right samples** with active learning, and the best strategies explicitly model epistemic uncertainty, enforce data diversity, or anticipate downstream model improvement. When working under tight annotation budgets (e.g. medical AI, satellite vision, robotics) active learning principles become critical. Now what if we have multiple-related tasks that we would like to have labeled data for, **multi-task active learning** [^1] is a framework that enables us to selected unlabeled data points that are informative to all such tasks simultaneously (where the data is shared across tasks, or each data point has multiple labels). 
+
+> Since we are paying to label a particular data point/frame, shouldn't we squeeze out as much insight/utility for multiple different tasks?
+
+
 
 ## Uncertainty Sampling
 
@@ -39,3 +43,5 @@ In deep learning, samples from different classes can sometimes have _overlapping
 [3] Gal, Yarin, and Zoubin Ghahramani. _"Dropout as a Bayesian approximation."_ ICML 2016
 
 [4] Weng, Lilian. (Feb 2022). Learning with not enough data part 2: active learning. Lil’Log.
+
+[^1]: Suppose that we are building a model for a. Tool classification b. Bleeding detection c. Anatomy segmentation. All three tasks share the same video frames, isntead of labeling separate frames for each, we use multi-task active learning to 1. Pick jointly high-value frames 2. Label those for all the tasks together 3. Retrain all the heads of a shared encoder-decoder. 
