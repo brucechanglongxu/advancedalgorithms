@@ -26,4 +26,11 @@ We then feed these tokens back into the _full model_, one at a time, and at each
 
 ## Medusa
 
-MEDUSA replaces the need for an external _draft model_ in speculative decoding by attaching multiple decoding heads (Medusa Heads) directly on top of the frozen or jointly fine-tuned LLM backbone. This allows 
+MEDUSA replaces the need for an external _draft model_ in speculative decoding by attaching multiple decoding heads (Medusa Heads) directly on top of the frozen or jointly fine-tuned LLM backbone. 
+
+> **MEDUSA** eliminates the need for a separate draft model and introduce multiple decoding heads into the _same model_ to predict multiple future tokens in parallel. This enables single-model, multi-token speculative decoding. 
+
+One might ask, if we are speculatively decoding let's say $$7$$ different tokens from the same context $$C$$, wouldn't all $$7$$ of these tokens be the same? Indeed, this would be the case if all of the MEDUSA heads were trained in a similar fashion, however during training these heads are trained to be _position-aware_ i.e. they were trained to predict a _specific_ offset token even though all of the heads have access to the same hidden state. Because language is so structured, these heads can learn distributional patterns about what usually comes $$1, 2, 3$$ tokens later. 
+
+> The same $$h_t$$ contains rich enough information to generate a _distribution over future_, the different heads act like different projections of that information. Think of it like looking at a weather radar and predicing the next $$7$$ hours of rain, the radar image is the same, but our models for $$1$$-hour ahead vs $$7$$ hours ahead use different heuristics and biases. 
+
