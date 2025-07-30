@@ -22,6 +22,27 @@
 必经之路
 事在人为
 拭目以待
+拖了幼稚，成长起来
+大可放心
+合格
+替你们守住个天下
+太平盛世
+寒门出身
+谨慎
+远道而来
+如有变故，马踏青山
+万无一失的局面
+化险为夷
+骑虎难下
+局面
+贪花好色
+总计
+稍有疏漏，天翻地覆
+细算因果
+权势滔天
+心机手段
+牵连甚广
+势不两立
 
 What should we do when we are faced with a limited about of labeled data for supervised learning tasks? We will try to involve some expert labelers when possible, but within a certain budget in order to be smart regarding which samples to label. Given an unlabeled dataset $$\mathcal{U}$$ and a fixed amount of labeling cost $$B$$, active learning techniques aim to select a subset of $$B$$ examples from $$\mathcal{U}$$ to be labeled to result in maximized improved model performance; this is particularly important in the medical field, where labeled data is costly to come by. 
 
