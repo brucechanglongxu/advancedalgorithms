@@ -8,7 +8,7 @@ Each step loads 100+ GB of model weights, runs massive matrix multiplications, a
 等事情临头了再说吧
 有所不知
 
-# Speculative Decoding
+# [Speculative Decoding](https://arxiv.org/pdf/2211.17192)
 
 In LLM inference, traditional decoding (e.g. greedy or beam search) is _sequential_ i.e. each token depends on the previous one which **limits parallelism**. _Speculative decoding_ changes an inherently serial problem into a parallel-friendly one. 
 
