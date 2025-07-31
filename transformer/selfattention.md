@@ -18,6 +18,10 @@ Encoders are neural network components that transform input data into a compact 
 
 One of the key differences between encoder-decoder and decoder-only architectures is that the former allows for _bidirectional attention_ [^3] (in the encoder), but decoder-only models are restricted to causal (left-to-right) attention.
 
+### Encoder-only Architectures
+
+These Transformer blocks read the entire input sequence and transform it into an output sequence of the same length (or into some pooled representation). The input (e.g. a sentence) is typically prepended with a special token like `[CLS]` for classification tasks and segmented with `[SEP]` if needed. All tokens are passed through $$N$$ encoder layers. Each encoder layer has self-atention that is _bidirectional_ (no mask, so each token attends to all others, left and right). Therefore, the output representations are rich with context from both past and future tokens relative to each position. 
+
 ## (Multi-Head) Self-Attention
 
 $$A(Q, K, V) = s(\frac{QK^T}{\sqrt{d_k}}) \cdot V$$
@@ -25,6 +29,10 @@ $$A(Q, K, V) = s(\frac{QK^T}{\sqrt{d_k}}) \cdot V$$
 In tasks like language modeling or image understanding, context matters. The meaning of a word depends on other words around it; in images, the interpretation of a pixel depends on its surroundings. We will first focus on autoregressive[^1], decoder[^2] models which are trained on a task of _predicting the next token in a sequence_. During inference, the model is provided with some text, and its task is to predict how this text should continue. 
 
 Mathematically, the goal of self-attention is to transform each input (embedded token from pretraining) into a _context vector_ which combines the information from all the inputs (embedded tokens) of your chat history so far. The word "dog" will have an initial embedding representation after pre-training (this will differ from model to model e.g. GPT-4 will have one embedding representation whereas LLaMA will have another, and starting with a clean chat we begin with this embedding), and as we go along and use the word "dog" in various contexts in our chat, we will update the ongoing representations of "dog" based on the increasing context that is provided to us.  
+
+### Grouped-query Attention
+### Paged Attention
+### Sliding window Attention
 
 ## Position-Wise Feed-Forward Networks (FFN)
 
@@ -44,4 +52,8 @@ Mathematically, the goal of self-attention is to transform each input (embedded 
 [^5]: Technically, we can remove or randomize E at the start rather than have it as a learnable parameter, however the other parts of the transformer network will subsequently need to learn to compensate - can the rest of the transformer absorb what is usually learned in embeddings? Most likely, given enough depth and data. Ablation studies in early BERT/GPT work show that freezing E often degrades performance. E encodes prior knowledge about token similarity (e.g. "cat" is similar to "dog" - semantic compression) and avoids forcing deeper layers to relearn lexical properties from scratch. **Token-free** transformers use characters/bytes (the must fundamental building blocks) as inputs so the vocabular is tiny, and the embedding matrix is very small, and learn representations of words/characters from scratch. 
 
 Encoder-Decoder: https://github.com/xbeat/Machine-Learning/blob/main/Understanding%20Encoders%2C%20Decoders%2C%20and%20Encoder-Decoder%20LLMs.md
+
+https://arxiv.org/pdf/2110.15253
+
+UL2: https://arxiv.org/pdf/2205.05131
 
