@@ -34,7 +34,7 @@ In summary, encoder-only (like BERT) _produces representations_. It modifies dat
 
 ### Decoder-Only Tranformers
 
-
+A decoder-only Transformer generates sequences autoregressively. _Data flow:_ at training time, we typically feed in the entire sequence of tokens with an appropriate mask so that each position can only attend to earlier positions. So the position $$t$$ in the training sequence is trying to predict token $$t$$ given tokens $$<t$$. The decoder has the same stack of $$N$$ layers, but each layer's self-attenion is **masked** such that no information flows from future tokens. At inference, generation starts with a prompt (which could be empty or some context like a prompt in ChatGPT) and then the model produces the next token probability via softmax, samples one, appends it to the input, and repeats. 
 
 ## (Multi-Head) Self-Attention
 
