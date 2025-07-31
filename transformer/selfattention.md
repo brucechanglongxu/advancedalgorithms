@@ -29,7 +29,12 @@ In summary, encoder-only (like BERT) _produces representations_. It modifies dat
 **Examples:**
 - **BERT (2018):** 12-layer or 24-layer encoder network. Trained on masked language modeling (15 percent tokens randomly masked and predicted) and next-sentence prediction. At fine-tune time, used for classification (using [CLS]) or QA (using start/end token position outputs via softmax) etc. BERT's architecture (being encoder-only) means it is bidirectional, which is largely credited for its success. 
 - **RoBERTa, ALBERT, DistilBERT:** are all encoder-only, often focusing on similar usage. 
-- **CLIP text encoder (2021):** 
+- **CLIP text encoder (2021):** the text part of CLIP is an encoder transformer that produces an embedding for the whole sentence (which is then matched with an image encoder's output in vector space). It doesn't generate text, just provides a representation.
+- **Vision Transformers (ViT) as encoders:** ViT is essentially an encoder that produces a representation of an image (with a special class token for classification). It's not generating images, just encoding. 
+
+### Decoder-Only Tranformers
+
+
 
 ## (Multi-Head) Self-Attention
 
