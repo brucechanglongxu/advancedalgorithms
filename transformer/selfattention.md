@@ -60,7 +60,7 @@ In practice, this means that we put the question in the prompt and then the mode
 
 Encoder-decoder architectures use two stacks: an encoder to _encode a source sequence_ (into a fixed-length) (a fixed number of hidden states) representation, and a decoder to _generate a target sequence_ from that representation. 
 
-1. The encoder takes source tokens (e.g. an input sequence) with 
+1. The encoder takes source tokens (e.g. an input sequence) with positional encoding, and processes through $$N$$ encoder layers of self-attention and feed-forward, outputting a sequence of hidden states (same length as input, but in practice the decoder can attend to all of them regardless of length differences). 
 
 ## (Multi-Head) Self-Attention
 
@@ -75,6 +75,12 @@ Mathematically, the goal of self-attention is to transform each input (embedded 
 ### Sliding window Attention
 
 ## Position-Wise Feed-Forward Networks (FFN)
+
+After each attention sub-layer, each Transformer layer includes a _feed-forward network_ applied independently to each position's representation. This is often called _position-wise_ FFN because the same small neural network is applied to transform the token at each position, without mixing information between positions (the mixing across tokens already happened in the attention sub-layer). 
+
+**Expessivity:** The presence of feed-forward layers means the Transformer is not just a glorified weighting mechanism; it can compute arbitrary transformations on the context. Each FFN could, in theory, implement complicated logic or feature extraction. This adds to the model’s expressivity and ability to generalize complex patterns. For language, think of the attention output as giving a token a bag of information from related words; the FFN can then synthesize that into something meaningful for the next layer. For instance, in translation, after attention aligns a source word with relevant target context (in the decoder), the FFN can help produce a representation that means “this is the likely next word in French given those aligned English words.” Without FFNs, the model would be linear except for softmax weightings – insufficient for the complexity of language. Additionally, having a separate FFN at each layer (with new parameters) means each layer can gradually build up higher-level features. n early layers, the FFN might learn low-level combinations (like forming phrase representations), and in later layers, FFNs could produce very abstract features (like an entire sentence meaning). This hierarchical feature construction is key to generalization in deep networks.
+
+**Muultimodal Integration:** In multimodal transformers (e.g., a transformer that both sees an image and reads text), FFN layers are usually shared between modalities or very similar if separate. For instance, if a single transformer processes both image patches and word tokens concatenated, the same FFN formula applies to both – it doesn’t know the difference. It will learn to handle each as needed. If separate transformers are used per modality (like CLIP had separate text and image transformers), each has its own FFNs specialized to that data. But if you then join the modalities via cross-attention, the FFNs again refine each token in its modality context. There isn’t something special needed in FFN for multimodal, which shows how robust and general this design is.
 
 ## Residual Connections (Skip Connections)
 
