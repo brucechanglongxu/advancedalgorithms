@@ -1,6 +1,22 @@
 # Quantization
 
-Quantization refers to converting higher-precision data types into lower-precision formats. _Lower-precision types mean fewer bytes per element_. Reducing bytes per element will increase **arithmetic intensity[^1]**. This can turn memory-bound ops into math-bound, if our math bandwidth can keep up[^2].
+Most production-grade ML models are trained in FP32 arithmetic to take advantage of the wider dynamic range, however at inference, these models may take a longer time to predict results compared to those at reduced precision inference, causing some delay in real-time responses and thereby affecting user experience. Hence we "quantize" or reduce precision at inference time to 8-bit integer numbers (typically). Rounding the weights after training may result in a lower accuracy model, especially if the weights have a wide dynamic range. 
+
+![Alt text](image.png)
+
+Quantization refers to converting higher-precision data types into lower-precision formats. _Lower-precision types mean fewer bytes per element_. Reducing bytes per element will increase **arithmetic intensity[^1]**. This can turn memory-bound ops into math-bound, if our math bandwidth can keep up[^2]. Indeed, when we quantize to 8-bit integer data, NVIDIA GPUs employ faster and cheaper 8-bit tensor cores to compute convolution and matrix-multiplicaiton operations, yielding more compute throughput, which is particularly effective on compute-limited layers. A reduced memory footprint means that the model requires less storage space, parameter updates are smaller and cache utilization is higher. 
+
+Note that floating point numbers are distributed nonuniformly in the _dynamic range_ of their defined interval, and about half of the representable floating-point numbers are in the interval [-1, 1] i.e. representable numbers in this interval would have higher precision than those in the interval [1, 2]. This high density of representable 32-bit floating point numbers in this interval is helpful in ML models where parameters and data have most of their distribution mass around zero. However when we use an 8-bit integer representation, we can only represent $$256$$ different values, and they are typically distributed uniformly around zero because this makes it easier to enable computing using high-throughput parallel pipelines. 
+
+## Post-Training Quantization of LLMs
+
+https://developer.nvidia.com/blog/post-training-quantization-of-llms-with-nvidia-nemo-and-nvidia-tensorrt-model-optimizer/
+
+https://docs.nvidia.com/nemo-framework/user-guide/latest/model-optimization/quantization/quantization.html
+
+## Quantization-aware Training
+
+https://developer.nvidia.com/blog/achieving-fp32-accuracy-for-int8-inference-using-quantization-aware-training-with-tensorrt/
 
 [^1]: Recall that [arithmetic intensity](https://github.com/brucechanglongxu/advancedalgorithms/blob/main/numerics/arithmeticintensity.md) is defined as FLOPs/bytes. Intuitively, it answers the question _for every byte that is loaded from memory, how much math is done before I need another one?_. It is a property at the algorithm/kernel level and not a function of the hardware (e.g. a single SM block). It doesn't matter how many SMs are used during the computation, the ratio is computed globally for the entire kernel launch. 
 [^2]: ReLU is traditionally a memory bound operation in FP16, but it could become _less so_ in INT8 not because it does more math, but because it is moving fewer bytes. 
