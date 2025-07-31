@@ -26,7 +26,7 @@ We then feed these tokens back into the _full model_, one at a time, and at each
 
 ## Medusa
 
-MEDUSA replaces the need for an external _draft model_ in speculative decoding by attaching multiple decoding heads (Medusa Heads) directly on top of the frozen or jointly fine-tuned LLM backbone. 
+[MEDUSA](https://arxiv.org/pdf/2401.10774) replaces the need for an external _draft model_ in speculative decoding by attaching multiple decoding heads (Medusa Heads) directly on top of the frozen or jointly fine-tuned LLM backbone. 
 
 > **MEDUSA** eliminates the need for a separate draft model and introduce multiple decoding heads into the _same model_ to predict multiple future tokens in parallel. This enables single-model, multi-token speculative decoding. 
 
