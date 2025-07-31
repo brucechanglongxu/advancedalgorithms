@@ -18,5 +18,9 @@ https://docs.nvidia.com/nemo-framework/user-guide/latest/model-optimization/quan
 
 https://developer.nvidia.com/blog/achieving-fp32-accuracy-for-int8-inference-using-quantization-aware-training-with-tensorrt/
 
+## QLoRA
+
+Introduced by Dettmers et al. in 2023, QLoRA enables efficient fine-tuning of large language models using 4-bit quantization, low rank adapters and double quantization. It makes it possible to fine-tune a 65B model on a single 48GB A100 GPU, without losing performance compared to full-precision tuning. 
+
 [^1]: Recall that [arithmetic intensity](https://github.com/brucechanglongxu/advancedalgorithms/blob/main/numerics/arithmeticintensity.md) is defined as FLOPs/bytes. Intuitively, it answers the question _for every byte that is loaded from memory, how much math is done before I need another one?_. It is a property at the algorithm/kernel level and not a function of the hardware (e.g. a single SM block). It doesn't matter how many SMs are used during the computation, the ratio is computed globally for the entire kernel launch. 
 [^2]: ReLU is traditionally a memory bound operation in FP16, but it could become _less so_ in INT8 not because it does more math, but because it is moving fewer bytes. 
