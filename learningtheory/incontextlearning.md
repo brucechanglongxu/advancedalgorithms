@@ -38,6 +38,8 @@ A:
 ```
 the LLM learns from the pattern in context, and predicts "hot" as the next token _as if it learned from the input-output examples provided_. The process of pattern-matching and generalizing from a few in-context examples is called **in-context learning**. The model is doing just one thing i.e. predicting the next word, but when provided with a sequence of examples as an input, it learns a mapping within that context (even though the model's weights don't change at all). We can prompt it with 0, 1, or many examples (zero-shot, one-shot, few-shot) and teach it new tasks on the fly, using only the prompt without retraining/fine-tuning. 
 
+![Alt text](image.png)
+
 TLDR, the following prompt:
 
 ```
