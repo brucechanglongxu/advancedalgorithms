@@ -20,7 +20,9 @@ One of the key differences between encoder-decoder and decoder-only architecture
 
 ### Encoder-only Architectures
 
-These Transformer blocks read the entire input sequence and transform it into an output sequence of the same length (or into some pooled representation). The input (e.g. a sentence) is typically prepended with a special token like `[CLS]` for classification tasks and segmented with `[SEP]` if needed. All tokens are passed through $$N$$ encoder layers. Each encoder layer has self-atention that is _bidirectional_ (no mask, so each token attends to all others, left and right). Therefore, the output representations are rich with context from both past and future tokens relative to each position. 
+These Transformer blocks read the entire input sequence and transform it into an output sequence of the same length (or into some pooled representation). The input (e.g. a sentence) is typically prepended with a special token like `[CLS]` for classification tasks and segmented with `[SEP]` if needed. All tokens are passed through $$N$$ encoder layers. Each encoder layer has self-atention that is _bidirectional_ (no mask, so each token attends to all others, left and right). Therefore, the output representations are rich with context from both past and future tokens relative to each position. At the top, we either take the sequence of contextual embeddings for each token (for tasks like token-level prediction e.g. Named Entity Recognition [^0]).
+
+Because self-attention is bidirectional, the encoder is suited for **non-generative** tasks, where understanding the full sequence holistically is needed. BERT for example captures relationships in a sentence in a deeply bidirectional way (unlike an autoregressive model, which can't see future tokens). This yields very strong representations for tasks like text classification, visual question answering (extractive), and token tagging. However, an encoder-only model has no mechanism to generate a sequence beyond its input length due to its non-causal structure and autoregressive process. 
 
 ## (Multi-Head) Self-Attention
 
@@ -44,7 +46,7 @@ Mathematically, the goal of self-attention is to transform each input (embedded 
 
 ## Softmax Output Layer
 
-[^0]:
+[^0]: Classify each token into classes. 
 [^1]:
 [^2]: 
 [^3]: Each token can attend to all other tokens in the same sequence, including tokens **before and after itself**. It is a full reader that can look ahead and behind the current token. This highlights why encoder-decoder models would be highly inefficient for chatbots, because every time we have a new line in our conversation, _we would need to encode the entire transcript again_ (to look "bidirectionally") before subsequently decoding to do next token generation. 
