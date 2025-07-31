@@ -44,7 +44,23 @@ In practice, this means that we put the question in the prompt and then the mode
 
 **Benefits:**
 - Simpler architecture (just one stack), all model capacity can be focused into one big transformer network. GPT-3's choice of a single 96-layer decoder was partly due to that simplicitly, it is easier to scale up and implement.
-- 
+- Training data for decoder-only is easy: just take a large text corpus and do next-word prediction (which is what GPT models do). For encoder-decoder, you often need paired data if you want to perform a specific mapping (like translation requires source-target pairs). There are unsupervised seq2seq pretraining schemes (like [T5's span denoising](https://arxiv.org/pdf/2205.05131)), but those are more complex than plain language modeling. 
+- A decoder-only LM is quite versatiile; it can be prompted to do many tasks (few-shot learning as shown by GPT-3) by just giving it instructions or examples in the prompt, because it will just continue the sequence in a way that hopefully follows the pattern. 
+
+**Trade-off**
+- It lacks the direct bidirectional understanding: at any generated token, it only has left context. However, at training time it did have full context for tokens in the middle of sequences because of teacher forcing (but they still couldn't attend to the right context in computing attention).
+- It is inherently sequential in output production (one token at a time), which is fine, but it can't revise previous outputs. Encoder-decoder could in theory do some tricks like output sequence might refer back.
+- For tasks like classification, you have to coax a decoder-only model to output a label. GPT does this through a prompt like _"Review:... Sentiment"_ and then it outputs _"Positive"_ or _"Negative"_. The model has to effectively do classification by generation. This works quite well actually, but it's a bit indirect. With an encoder, we would just put a classifier on [CLS]. 
+
+**GPT series (GPT-1, 2, 3, 4)** are all decoder-only transformers, and they are trained to predict the next token given all previous ones, using masked self-attention. They have been astonishingly successful at language generation, and via prompting, a variety of tasks. 
+
+**ChatGPT and instruct models:** These are decoder-only models fine-tuned with instruction-response pairs and RLHF. Under the hood, they are still generating the answer as a continuation of the conversation history. GPT-Neo, GPT-J, LLaMA are decoder-only models that follow the GPT architecture with minor modifications like rotary embeddings. 
+
+### Encoder-Decoder Transformers
+
+Encoder-decoder architectures use two stacks: an encoder to _encode a source sequence_ (into a fixed-length) (a fixed number of hidden states) representation, and a decoder to _generate a target sequence_ from that representation. 
+
+1. The encoder takes source tokens (e.g. an input sequence) with 
 
 ## (Multi-Head) Self-Attention
 
