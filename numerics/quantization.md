@@ -34,8 +34,8 @@ _Why 52 Mantissa Bits in FP64?_
 This was a decision based on precision-engineering rooted in backward compatibility, hardware efficiency, and binary-decimal precision. The IEEE-754 double precision (FP64) must fit into 64 bits for memory alignment (8-byte word), hardware register size (e.g. x86-64), SIMD vector operations, cache line efficiency. So we have $$64$$ bits to divide up to:
 
 - $$1$$ bit for the sign
-- $$E$$ bits for the exponent
-- $$M$$ bits for the mantissa
+- $$E$$ bits for the exponent (note that this is number of _bits_ in the exponent, which means that the actual exponent value goes up to $$2^E$$)
+- $$M$$ bits for the mantissa (note that this is the number of _bits_ in the mantissa, which means that the actual mantissa value goes up to $$2^M$$)
 
 ```math
 1\textbf{(sign)} + E + M = 64 
@@ -46,6 +46,18 @@ This was a decision based on precision-engineering rooted in backward compatibil
 ![Alt text](image-2.png)
 
 $$52$$ mantissa bits can represent up to $$\log_{10}2^{53} \simeq 15.95$$ [^4] decimal digits, which is a sweet spot in scientific computing. The above chart demonstrates common floating point representations and their canonical (e, m) pairs plotted, alongside the hypothetical maximum decimal precision (y-axis) alongside size (x-axis) as we vary $$(e, m)$$. 
+
+| Format   | Exponent Bits | Mantissa Bits | Max Value (log₁₀, approx) | Max Decimal Precision (log₁₀ digits) |
+|----------|---------------|---------------|---------------------------|--------------------------------------|
+| FP64     | 11            | 52            | 308                       | 15.65                                |
+| FP32     | 8             | 23            | 38                        | 6.92                                 |
+| FP16     | 5             | 10            | 5                         | 3.01                                 |
+| FP8      | 4 or 5        | 3 or 2        | 2–3                       | 0.90–0.60                            |
+| NVFP4    | 2 (per value) | 1 (per value) | ~1                        | 0.30                                 |
+| MXFP4    | 2 (per value) | 1 (per value) | ~1                        | 0.30                                 |
+| INT8     | N/A           | 8             | 2.1 ([-128,127])          | 2.41                                 |
+| INT4     | N/A           | 4             | 0.85 ([-8,7])             | 1.20                                 |
+
 
 ## Post-Training Quantization of LLMs
 
