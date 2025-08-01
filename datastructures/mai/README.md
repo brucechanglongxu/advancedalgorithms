@@ -6,4 +6,4 @@
 - JEPA
   - V-JEPA 2: https://www.nature.com/articles/s42256-024-00965-w
 - ZeRO / DeepSpeed (https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
-  - 
+- State Space Models
