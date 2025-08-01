@@ -23,7 +23,9 @@ where $$s$$ is the sign bit ($$0$$ for $$+$$, $$1$$ for $$-$$). $$e$$ is the exp
 ### Mantissa 
 
 Let's see what range of values $$m$$, our mantissa can take depending on how many _mantissa bits_ there are. Let us first hone in on FP64, and walk through some hypothetical combinations of sign, exponent and mantissa. Note that in the canonical FP64 representation, the mantissa (fractional part) is 52-bits wide.
-$$m = b_1 \cdot 2^{-1} + b_2 \cdot 2^{-2} + \cdots + b_{52} \cdot 2^{-52}$$
+```math
+m = b_1 \cdot 2^{-1} + b_2 \cdot 2^{-2} + \cdots + b_{52} \cdot 2^{-52}
+```
 
 
 ## Post-Training Quantization of LLMs
