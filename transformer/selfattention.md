@@ -10,6 +10,10 @@ Let's dive into the central question of _what actually gets learned in a transfo
 
 Now for each of the $$L$$ Transformer layers, we have A. Multi-Head Self-Attention (MHSA) and B. Feedforward Networks (FFN). In the MHSA blocks, each head has its own set of projection matrices $$W_Q, W_K, W_V$$ with shape $$d \times d_h$$ (where $$d_h = d / h$$ is the number of heads) which projects the input embeddings to Queries, Keys, and Values [^4], and have an output projection matrix $$W_O$$ with shape $$d \times d$$. 
 
+## Forward and Backward Pass
+
+
+
 ## Encoder-Decoder Architectures
 
 Encoders are neural network components that transform input data into a compact representation or "encoding." They capture essential features of the input, reducing dimensionality while preserving important information. In natural language processing, encoders often process sequences of words or tokens. 
@@ -80,7 +84,7 @@ After each attention sub-layer, each Transformer layer includes a _feed-forward 
 
 **Expessivity:** The presence of feed-forward layers means the Transformer is not just a glorified weighting mechanism; it can compute arbitrary transformations on the context. Each FFN could, in theory, implement complicated logic or feature extraction. This adds to the model’s expressivity and ability to generalize complex patterns. For language, think of the attention output as giving a token a bag of information from related words; the FFN can then synthesize that into something meaningful for the next layer. For instance, in translation, after attention aligns a source word with relevant target context (in the decoder), the FFN can help produce a representation that means “this is the likely next word in French given those aligned English words.” Without FFNs, the model would be linear except for softmax weightings – insufficient for the complexity of language. Additionally, having a separate FFN at each layer (with new parameters) means each layer can gradually build up higher-level features. n early layers, the FFN might learn low-level combinations (like forming phrase representations), and in later layers, FFNs could produce very abstract features (like an entire sentence meaning). This hierarchical feature construction is key to generalization in deep networks.
 
-**Muultimodal Integration:** In multimodal transformers (e.g., a transformer that both sees an image and reads text), FFN layers are usually shared between modalities or very similar if separate. For instance, if a single transformer processes both image patches and word tokens concatenated, the same FFN formula applies to both – it doesn’t know the difference. It will learn to handle each as needed. If separate transformers are used per modality (like CLIP had separate text and image transformers), each has its own FFNs specialized to that data. But if you then join the modalities via cross-attention, the FFNs again refine each token in its modality context. There isn’t something special needed in FFN for multimodal, which shows how robust and general this design is.
+**Multimodal Integration:** In multimodal transformers (e.g., a transformer that both sees an image and reads text), FFN layers are usually shared between modalities or very similar if separate. For instance, if a single transformer processes both image patches and word tokens concatenated, the same FFN formula applies to both – it doesn’t know the difference. It will learn to handle each as needed. If separate transformers are used per modality (like CLIP had separate text and image transformers), each has its own FFNs specialized to that data. But if you then join the modalities via cross-attention, the FFNs again refine each token in its modality context. There isn’t something special needed in FFN for multimodal, which shows how robust and general this design is.
 
 ## Residual Connections (Skip Connections)
 
