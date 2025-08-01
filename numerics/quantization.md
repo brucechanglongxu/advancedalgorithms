@@ -12,9 +12,9 @@ Note that floating point numbers are distributed nonuniformly in the _dynamic ra
 
 Floating-point numbers represent real numbers using $$(-1)^s \cdot 2^e \cdot (1 + m)$$, where $$s$$ is the sign bit ($$0$$ for positive, $$1$$ for negative), $$e$$ is the exponent (bias encoded), and $$m$$ is the mantissa (also called significand/fraction). This format allows wide _dynamic range_ with constant relative position. 
 
-\begin{equation}
+```math
 x = (-1)^s \cdot 2^{e - \textbf{bias}} \cdot (1 + m)
-\end{equation}
+```
 
 where $$s$$ is the sign bit ($$0$$ for $$+$$, $$1$$ for $$-$$). $$e$$ is the exponent, which is encoded/biased, $$m$$ mantissa 
 
