@@ -41,7 +41,11 @@ This was a decision based on precision-engineering rooted in backward compatibil
 1\textbf{(sign)} + E + M = 64 
 ```
 
-> For a fixed number of floating point bits B, the higher the number of mantissa bits, the more precise numbers we can represent; but this leads to less space for the exponent bits, and therefore, the smaller range of real numbers we can represent.  
+> For a fixed number of floating point bits B, the higher the number of mantissa bits, the more precise numbers we can represent; but this leads to less space for the exponent bits, and therefore, the smaller range of real numbers we can represent.
+
+$$52$$ mantissa bits can represent up to $$\log_{10}(2^{53} \simeq 15.95$$ decimal digits, which is a sweet spot in scientific computing. 
+
+$$$$
 
 ## Post-Training Quantization of LLMs
 
