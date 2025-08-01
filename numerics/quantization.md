@@ -29,6 +29,20 @@ m = b_1 \cdot 2^{-1} + b_2 \cdot 2^{-2} + \cdots + b_{52} \cdot 2^{-52} \in [0.0
 ```
 note that it only covers the interval $$[1.0, 2.0)$$ with a precision bounded by $$2^{-m}$$, and therefore decimal values/floating point values are approximated by what the binary represents. 
 
+_Why 52 Mantissa Bits in FP64?_
+
+This was a decision based on precision-engineering rooted in backward compatibility, hardware efficiency, and binary-decimal precision. The IEEE-754 double precision (FP64) must fit into 64 bits for memory alignment (8-byte word), hardware register size (e.g. x864-64), SIMD vector operations, cache line efficiency. So we have $$64$$ bits to divide up to:
+
+- $$1$$ bit for the sign
+- $$E$$ bits for the exponent
+- $$M$$ bits for the mantissa
+
+```math
+1\textbf{(sign)} + E + M = 64
+```
+
+> For a fixed number of floating point bits, 
+
 ## Post-Training Quantization of LLMs
 
 https://developer.nvidia.com/blog/post-training-quantization-of-llms-with-nvidia-nemo-and-nvidia-tensorrt-model-optimizer/
