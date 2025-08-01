@@ -8,6 +8,16 @@ Quantization refers to converting higher-precision data types into lower-precisi
 
 Note that floating point numbers are distributed nonuniformly in the _dynamic range_ of their defined interval, and about half of the representable floating-point numbers are in the interval [-1, 1] i.e. representable numbers in this interval would have higher precision than those in the interval [1, 2]. This high density of representable 32-bit floating point numbers in this interval is helpful in ML models where parameters and data have most of their distribution mass around zero. However when we use an 8-bit integer representation, we can only represent $$256$$ different values, and they are typically distributed uniformly around zero because this makes it easier to enable computing using high-throughput parallel pipelines. 
 
+## Floating Point Representations
+
+Floating-point numbers represent real numbers using $$(-1)^s \cdot 2^e \cdot (1 + m)$$, where $$s$$ is the sign bit ($$0$$ for positive, $$1$$ for negative), $$e$$ is the exponent (bias encoded), and $$m$$ is the mantissa (also called significand/fraction). This format allows wide _dynamic range_ with constant relative position. 
+
+\begin{equation}
+x = (-1)^s \cdot 2^{e - \textbf{bias}} \cdot (1 + m)
+\end{equation}
+
+where $$s$$ is the sign bit ($$0$$ for $$+$$, $$1$$ for $$-$$). $$e$$ is the exponent, which is encoded/biased, $$m$$ mantissa 
+
 ## Post-Training Quantization of LLMs
 
 https://developer.nvidia.com/blog/post-training-quantization-of-llms-with-nvidia-nemo-and-nvidia-tensorrt-model-optimizer/
@@ -21,6 +31,10 @@ https://developer.nvidia.com/blog/achieving-fp32-accuracy-for-int8-inference-usi
 ## QLoRA
 
 Introduced by Dettmers et al. in 2023, QLoRA enables efficient fine-tuning of large language models using 4-bit quantization, low rank adapters and double quantization. It makes it possible to fine-tune a 65B model on a single 48GB A100 GPU, without losing performance compared to full-precision tuning. 
+
+## NVFP4
+
+NVFP4 is an excellent anchor for mastering modern quantization, to go deep, we'll build from first principles. 
 
 [^1]: Recall that [arithmetic intensity](https://github.com/brucechanglongxu/advancedalgorithms/blob/main/numerics/arithmeticintensity.md) is defined as FLOPs/bytes. Intuitively, it answers the question _for every byte that is loaded from memory, how much math is done before I need another one?_. It is a property at the algorithm/kernel level and not a function of the hardware (e.g. a single SM block). It doesn't matter how many SMs are used during the computation, the ratio is computed globally for the entire kernel launch. 
 [^2]: ReLU is traditionally a memory bound operation in FP16, but it could become _less so_ in INT8 not because it does more math, but because it is moving fewer bytes. 
