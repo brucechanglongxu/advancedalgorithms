@@ -45,7 +45,7 @@ This was a decision based on precision-engineering rooted in backward compatibil
 
 ![Alt text](image-2.png)
 
-$$52$$ mantissa bits can represent up to $$\log_{10}2^{53} \simeq 15.95$$ [^4] decimal digits, which is a sweet spot in scientific computing. 
+$$52$$ mantissa bits can represent up to $$\log_{10}2^{53} \simeq 15.95$$ [^4] decimal digits, which is a sweet spot in scientific computing. The above chart demonstrates common floating point representations and their canonical (e, m) pairs plotted, alongside the hypothetical maximum decimal precision (y-axis) alongside size (x-axis) as we vary $$(e, m)$$. 
 
 ## Post-Training Quantization of LLMs
 
