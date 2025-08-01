@@ -31,7 +31,7 @@ note that it only covers the interval $$[1.0, 2.0)$$ with a precision bounded by
 
 _Why 52 Mantissa Bits in FP64?_
 
-This was a decision based on precision-engineering rooted in backward compatibility, hardware efficiency, and binary-decimal precision. The IEEE-754 double precision (FP64) must fit into 64 bits for memory alignment (8-byte word), hardware register size (e.g. x864-64), SIMD vector operations, cache line efficiency. So we have $$64$$ bits to divide up to:
+This was a decision based on precision-engineering rooted in backward compatibility, hardware efficiency, and binary-decimal precision. The IEEE-754 double precision (FP64) must fit into 64 bits for memory alignment (8-byte word), hardware register size (e.g. x86-64), SIMD vector operations, cache line efficiency. So we have $$64$$ bits to divide up to:
 
 - $$1$$ bit for the sign
 - $$E$$ bits for the exponent
@@ -43,9 +43,7 @@ This was a decision based on precision-engineering rooted in backward compatibil
 
 > For a fixed number of floating point bits B, the higher the number of mantissa bits, the more precise numbers we can represent; but this leads to less space for the exponent bits, and therefore, the smaller range of real numbers we can represent.
 
-$$52$$ mantissa bits can represent up to $$\log_{10}2^{53} \simeq 15.95$$ decimal digits, which is a sweet spot in scientific computing. 
-
-$$$$
+$$52$$ mantissa bits can represent up to $$\log_{10}2^{53} \simeq 15.95$$ [^4] decimal digits, which is a sweet spot in scientific computing. 
 
 ## Post-Training Quantization of LLMs
 
@@ -68,3 +66,4 @@ NVFP4 is an excellent anchor for mastering modern quantization, to go deep, we'l
 [^1]: Recall that [arithmetic intensity](https://github.com/brucechanglongxu/advancedalgorithms/blob/main/numerics/arithmeticintensity.md) is defined as FLOPs/bytes. Intuitively, it answers the question _for every byte that is loaded from memory, how much math is done before I need another one?_. It is a property at the algorithm/kernel level and not a function of the hardware (e.g. a single SM block). It doesn't matter how many SMs are used during the computation, the ratio is computed globally for the entire kernel launch. 
 [^2]: ReLU is traditionally a memory bound operation in FP16, but it could become _less so_ in INT8 not because it does more math, but because it is moving fewer bytes. 
 [^3]: The mantissa lies in the interval $$[0, 1)$$; all IEEE754 normalized floating point formats assume a leading $$1$$ (a.k.a. _hidden bit_). So the mantissa encodes the **fractional part**. The actual significant is $$1 + m \in [1, 2)$$. 
+[^4]: We can walk through this calculation as follows, let $$10^{-t}$$ be the lowest exponent of $$10$$ (definition of precision) that can be represented by $$1 + b_1 \cdot 2^{-1} + \cdots b_k \cdot 2^{-k}$$. If we multiply both sides by $$10^t$$, then we have that $$10^t + a_1 \cdot 10^{t-1} + \cdots + a_t \cdot 10^0 = 10^t \cdot (1 + \cdots + b_k \cdot 2^{-k})$$. The rest follows.
