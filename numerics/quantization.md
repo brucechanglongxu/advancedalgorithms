@@ -16,7 +16,15 @@ Floating-point numbers represent real numbers using $$(-1)^s \cdot 2^e \cdot (1 
 x = (-1)^s \cdot 2^{e - \textbf{bias}} \cdot (1 + m)
 ```
 
-where $$s$$ is the sign bit ($$0$$ for $$+$$, $$1$$ for $$-$$). $$e$$ is the exponent, which is encoded/biased, $$m$$ mantissa [^3]. 
+where $$s$$ is the sign bit ($$0$$ for $$+$$, $$1$$ for $$-$$). $$e$$ is the exponent, which is encoded/biased, $$m$$ mantissa [^3]. The reason we have a bias term is so that we can store positive bits and have decimal numbers using only an unsigned integer as the exponent field. 
+
+> A bias term enables us to store both positive and negative exponents using just bits for unsigned integers.
+
+### Mantissa 
+
+Let's see what range of values $$m$$, our mantissa can take depending on how many _mantissa bits_ there are. Let us first hone in on FP64, and walk through some hypothetical combinations of sign, exponent and mantissa. Note that in the canonical FP64 representation, the mantissa (fractional part) is 52-bits wide.
+$$m = b_1 \cdot 2^{-1} + b_2 \cdot 2^{-2} + \cdots + b_{52} \cdot 2^{-52}$$
+
 
 ## Post-Training Quantization of LLMs
 
