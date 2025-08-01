@@ -38,10 +38,10 @@ This was a decision based on precision-engineering rooted in backward compatibil
 - $$M$$ bits for the mantissa
 
 ```math
-1\textbf{(sign)} + E + M = 64
+1\textbf{(sign)} + E + M = 64 
 ```
 
-> For a fixed number of floating point bits, 
+> For a fixed number of floating point bits B, the higher the number of mantissa bits, the more precise numbers we can represent; but this leads to less space for the exponent bits, and therefore, the smaller range of real numbers we can represent.  
 
 ## Post-Training Quantization of LLMs
 
